@@ -7,10 +7,13 @@ module.exports = {
       "npm-debug.log",
       "**/.git",
       "**/node_modules",
+      "*.log",
+      "auditLog/**",
     ],
     "rsyncOptions": {
       "out-format": "%n",
       "recursive": null,
+      "update":null,
       "copy-links": null,
       "perms": null,
       "times": null,
