@@ -128,13 +128,14 @@ const NOTIFICATION = {
   }
 
   function watch(project) {
-    const watcher = gaze.watch(CONFIG[project].from, {
-      persistent: true,
-      ignored: CONFIG[project].exclude || null,
-      cwd: CONFIG[project].from,
-    });
-    watchers.push({ project, watcher });
+    // const watcher = chokidar.watch(CONFIG[project].from, {
+    //   persistent: true,
+    //   ignored: CONFIG[project].exclude || null,
+    //   cwd: CONFIG[project].from,
+    // });
 
+    gaze(CONFIG[project].from, (err, watcher) => {
+    watchers.push({ project, watcher });
     const syncDebounced = debounce(() => {
       sync(project).catch((error) => {
         consoleTimestamp.error(`[${project} | sync error] `, error);
@@ -149,6 +150,7 @@ const NOTIFICATION = {
       .on("error", function (error) {
         consoleTimestamp.error(`[${project} | watch error] `, error);
       });
+    });
   }
 
   for (let project in CONFIG) {
